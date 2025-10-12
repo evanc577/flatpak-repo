@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Clone Hero
+Type=Application
+Icon=net.clonehero.clonehero
+Exec=clonehero
+Terminal=false
+Categories=Game;Music;
+StartupWMClass=clonehero

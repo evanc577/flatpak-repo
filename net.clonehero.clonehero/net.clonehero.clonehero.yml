@@ -1,0 +1,30 @@
+id: net.clonehero.clonehero
+runtime: org.freedesktop.Platform
+runtime-version: '25.08'
+sdk: org.freedesktop.Sdk
+command: clonehero
+finish-args:
+  - --socket=x11
+  - --socket=pulseaudio
+  - --device=dri
+  - --device=input
+  - --persist=.clonehero
+modules:
+  - name: clonehero
+    buildsystem: simple
+    build-commands:
+      - mkdir -p /app
+      - tar -xf clonehero.tar.xz -C /app
+      - mv /app/clonehero-linux /app/bin
+      - chmod +x /app/bin/clonehero
+      - install -Dm644 ${FLATPAK_ID}.desktop -t /app/share/applications/
+      - install -Dm644 /app/bin/clonehero_Data/Resources/UnityPlayer.png -t /app/share/icons/
+      - mv /app/share/icons/UnityPlayer.png /app/share/icons/net.clonehero.clonehero.png
+    sources:
+      - type: file
+        dest-filename: clonehero.tar.xz
+        only-arches: [x86_64]
+        url: https://github.com/clonehero-game/releases/releases/download/V1.0.0.4080/CloneHero-linux.tar.xz
+        sha256: 6162d5fb0810f517ca45249687fc743cc8c1ead140e18a476fd5ad60e3a06592
+      - type: file
+        path: net.clonehero.clonehero.desktop
