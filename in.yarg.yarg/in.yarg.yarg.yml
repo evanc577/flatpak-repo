@@ -5,10 +5,10 @@ sdk: org.freedesktop.Sdk
 command: YARG
 finish-args:
   - --socket=x11
-  - --socket=wayland
   - --socket=pulseaudio
   - --device=dri
   - --device=input
+  - --share=network
 modules:
   - name: yarg
     buildsystem: simple
@@ -26,3 +26,5 @@ modules:
         sha256: b5062fa8a7efe0241dcb6120ff211f72dfc2af96f83d9591dadf1961d7b2b43c
       - type: file
         path: in.yarg.yarg.desktop
+      - type: file
+        path: in.yarg.yarg.metainfo.xml

@@ -9,6 +9,7 @@ finish-args:
   - --device=dri
   - --device=input
   - --persist=.clonehero
+  - --share=network
 modules:
   - name: clonehero
     buildsystem: simple
@@ -29,3 +30,5 @@ modules:
         sha256: 6162d5fb0810f517ca45249687fc743cc8c1ead140e18a476fd5ad60e3a06592
       - type: file
         path: net.clonehero.clonehero.desktop
+      - type: file
+        path: net.clonehero.clonehero.metainfo.xml
