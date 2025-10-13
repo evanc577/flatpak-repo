@@ -35,6 +35,7 @@ jobs:
             in.yarg.yarg/in.yarg.yarg.yml
           gpg-sign: ${{ steps.gpg.outputs.fingerprint }}
           upload-pages-artifact: true
+          flatpak-builder-args: --install-deps-from=https://dl.flathub.org/repo/flathub.flatpakrepo
 
   deploy:
     name: Deploy
