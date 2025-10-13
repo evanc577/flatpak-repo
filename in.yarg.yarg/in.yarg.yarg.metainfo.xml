@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>in.yarg.yarg</id>
+  
+  <name>YARG</name>
+  <summary>Yet Another Rhythm Game inspired by beloved classics, delivering an immersive fret rhythm experience.</summary>
+  
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>LGPL-3.0-or-later</project_license>
+  
+  <supports>
+    <control>pointing</control>
+    <control>keyboard</control>
+    <control>gamepad</control>
+  </supports>
+  
+  <description>
+    <p>
+      YARG (a.k.a. Yet Another Rhythm Game) is a free, open-source, plastic guitar game that is still in development. It supports guitar (five fret), drums (plastic or e-kit), vocals, pro-guitar, and more!
+    </p>
+  </description>
+  
+  <launchable type="desktop-id">in.yarg.yarg.desktop</launchable>
+</component>

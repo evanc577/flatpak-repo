@@ -17,6 +17,7 @@ modules:
       - install -Dm644 ${FLATPAK_ID}.desktop -t /app/share/applications/
       - install -Dm644 /app/bin/YARG_Data/Resources/UnityPlayer.png -t /app/share/icons/
       - mv /app/share/icons/UnityPlayer.png /app/share/icons/in.yarg.yarg.png
+      - install -Dm644 ${FLATPAK_ID}.metainfo.xml -t /app/share/metainfo
     sources:
       - type: file
         dest-filename: yarg.zip
