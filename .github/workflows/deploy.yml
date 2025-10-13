@@ -11,7 +11,7 @@ jobs:
     name: Flatter
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/andyholmes/flatter/gnome:master
+      image: ghcr.io/andyholmes/flatter/freedesktop:25.08
       options: --privileged
 
     steps:
@@ -35,7 +35,6 @@ jobs:
             in.yarg.yarg/in.yarg.yarg.yml
           gpg-sign: ${{ steps.gpg.outputs.fingerprint }}
           upload-pages-artifact: true
-          flatpak-builder-args: --install-deps-from=https://dl.flathub.org/repo/flathub.flatpakrepo
 
   deploy:
     name: Deploy
