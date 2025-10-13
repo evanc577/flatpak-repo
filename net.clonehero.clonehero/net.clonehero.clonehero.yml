@@ -14,13 +14,19 @@ modules:
   - name: clonehero
     buildsystem: simple
     build-commands:
-      - mkdir -p /app
+      # Extract game
       - tar -xf clonehero.tar.xz --no-same-owner
-      - mv clonehero-linux /app/bin
-      - chmod +x /app/bin/clonehero
+      - mkdir -p /app/lib/
+      - mv clonehero-linux /app/lib/clonehero
+      - chmod +x /app/lib/clonehero/clonehero
+
+      # Install wrapper script
+      - install -Dm755 clonehero -t /app/bin
+
+      # Install desktop, icon, metainfo
       - install -Dm644 ${FLATPAK_ID}.desktop -t /app/share/applications/
-      - install -Dm644 /app/bin/clonehero_Data/Resources/UnityPlayer.png -t /app/share/icons/
-      - mv /app/share/icons/UnityPlayer.png /app/share/icons/net.clonehero.clonehero.png
+      - mkdir -p /app/share/icons/hicolor/128x128/apps
+      - mv /app/lib/clonehero/clonehero_Data/Resources/UnityPlayer.png /app/share/icons/hicolor/128x128/apps/net.clonehero.clonehero.png
       - install -Dm644 ${FLATPAK_ID}.metainfo.xml -t /app/share/metainfo
     sources:
       - type: file
@@ -28,6 +34,11 @@ modules:
         only-arches: [x86_64]
         url: https://github.com/clonehero-game/releases/releases/download/V1.0.0.4080/CloneHero-linux.tar.xz
         sha256: 6162d5fb0810f517ca45249687fc743cc8c1ead140e18a476fd5ad60e3a06592
+      - type: script
+        dest-filename: clonehero
+        commands:
+          - ulimit -Sn 65536
+          - /app/lib/clonehero/clonehero "$@"
       - type: file
         path: net.clonehero.clonehero.desktop
       - type: file

@@ -2,7 +2,7 @@
 Name=YARG
 Type=Application
 Icon=in.yarg.yarg
-Exec=YARG
+Exec=yarg
 Terminal=false
 Categories=Game;Music;
 StartupWMClass=YARG

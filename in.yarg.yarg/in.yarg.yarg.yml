@@ -2,7 +2,7 @@ id: in.yarg.yarg
 runtime: org.freedesktop.Platform
 runtime-version: '25.08'
 sdk: org.freedesktop.Sdk
-command: YARG
+command: yarg
 finish-args:
   - --socket=x11
   - --socket=pulseaudio
@@ -13,10 +13,17 @@ modules:
   - name: yarg
     buildsystem: simple
     build-commands:
-      - unzip yarg.zip -d /app/bin
+      # Extract game
+      - mkdir -p /app/lib/yarg
+      - unzip yarg.zip -d /app/lib/yarg
+
+      # Install wrapper script
+      - install -Dm755 yarg -t /app/bin
+
+      # Install desktop, icon, metainfo
       - install -Dm644 ${FLATPAK_ID}.desktop -t /app/share/applications/
-      - install -Dm644 /app/bin/YARG_Data/Resources/UnityPlayer.png -t /app/share/icons/
-      - mv /app/share/icons/UnityPlayer.png /app/share/icons/in.yarg.yarg.png
+      - mkdir -p /app/share/icons/hicolor/128x128/apps
+      - mv /app/lib/yarg/YARG_Data/Resources/UnityPlayer.png /app/share/icons/hicolor/128x128/apps/in.yarg.yarg.png
       - install -Dm644 ${FLATPAK_ID}.metainfo.xml -t /app/share/metainfo
     sources:
       - type: file
@@ -24,6 +31,11 @@ modules:
         only-arches: [x86_64]
         url: https://github.com/YARC-Official/YARG/releases/download/v0.13.1/YARG_v0.13.1-Linux-x86_64.zip
         sha256: b5062fa8a7efe0241dcb6120ff211f72dfc2af96f83d9591dadf1961d7b2b43c
+      - type: script
+        dest-filename: yarg
+        commands:
+          - ulimit -Sn 65536
+          - /app/lib/yarg/YARG "$@"
       - type: file
         path: in.yarg.yarg.desktop
       - type: file
