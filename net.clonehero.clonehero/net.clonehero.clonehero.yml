@@ -14,8 +14,8 @@ modules:
     buildsystem: simple
     build-commands:
       - mkdir -p /app
-      - tar -xf clonehero.tar.xz -C /app
-      - mv /app/clonehero-linux /app/bin
+      - tar -xf clonehero.tar.xz --no-same-owner
+      - mv clonehero-linux /app/bin
       - chmod +x /app/bin/clonehero
       - install -Dm644 ${FLATPAK_ID}.desktop -t /app/share/applications/
       - install -Dm644 /app/bin/clonehero_Data/Resources/UnityPlayer.png -t /app/share/icons/
