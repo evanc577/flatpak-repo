@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Clone Hero PTB
+Type=Application
+Icon=net.clonehero.clonehero-ptb
+Exec=clonehero
+Terminal=false
+Categories=Game;Music;
+StartupWMClass=clonehero

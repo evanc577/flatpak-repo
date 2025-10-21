@@ -1,4 +1,4 @@
-id: net.clonehero.clonehero
+id: net.clonehero.clonehero-ptb
 runtime: org.freedesktop.Platform
 runtime-version: '25.08'
 sdk: org.freedesktop.Sdk
@@ -28,20 +28,20 @@ modules:
       # Install desktop, icon, metainfo
       - install -Dm644 ${FLATPAK_ID}.desktop -t /app/share/applications/
       - mkdir -p /app/share/icons/hicolor/128x128/apps
-      - mv /app/lib/clonehero/clonehero_Data/Resources/UnityPlayer.png /app/share/icons/hicolor/128x128/apps/net.clonehero.clonehero.png
+      - mv /app/lib/clonehero/clonehero_Data/Resources/UnityPlayer.png /app/share/icons/hicolor/128x128/apps/net.clonehero.clonehero-ptb.png
       - install -Dm644 ${FLATPAK_ID}.metainfo.xml -t /app/share/metainfo
     sources:
       - type: file
         dest-filename: clonehero.tar.xz
         only-arches: [x86_64]
-        url: https://github.com/clonehero-game/releases/releases/download/V1.0.0.4080/CloneHero-linux.tar.xz
-        sha256: 6162d5fb0810f517ca45249687fc743cc8c1ead140e18a476fd5ad60e3a06592
+        url: https://github.com/clonehero-game/releases/releases/download/v1.1.0.4261-PTB/clonehero-linux.tar.xz
+        sha256: 61f6ddf13a93674218c4c218e539acc537c3fc1cff6a75747603f5bf5ddd7abb
       - type: script
         dest-filename: clonehero
         commands:
           - ulimit -Sn 65536
           - /app/lib/clonehero/clonehero "$@"
       - type: file
-        path: net.clonehero.clonehero.desktop
+        path: net.clonehero.clonehero-ptb.desktop
       - type: file
-        path: net.clonehero.clonehero.metainfo.xml
+        path: net.clonehero.clonehero-ptb.metainfo.xml
