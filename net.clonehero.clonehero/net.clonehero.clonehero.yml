@@ -13,35 +13,49 @@ finish-args:
   - --filesystem=home:ro
   - --share=network
 modules:
+  - name: hidapi
+    sources:
+      - type: archive
+        url: https://github.com/libusb/hidapi/archive/refs/tags/hidapi-0.15.0.tar.gz
+        sha256: 5d84dec684c27b97b921d2f3b73218cb773cf4ea915caee317ac8fc73cef8136
+    buildsystem: cmake-ninja
   - name: clonehero
     buildsystem: simple
     build-commands:
-      # Extract game
-      - tar -xf clonehero.tar.xz --no-same-owner
-      - mkdir -p /app/lib/
-      - mv clonehero-linux /app/lib/clonehero
-      - chmod +x /app/lib/clonehero/clonehero
+      # Install desktop, icon, metainfo
+      - install -Dm644 ${FLATPAK_ID}.desktop -t /app/share/applications/
+      - mkdir -p /app/share/icons/hicolor/128x128/apps
+      - mv ${FLATPAK_ID}.png /app/share/icons/hicolor/128x128/apps/${FLATPAK_ID}.png
+      - install -Dm644 ${FLATPAK_ID}.metainfo.xml -t /app/share/metainfo
 
       # Install wrapper script
       - install -Dm755 clonehero -t /app/bin
 
-      # Install desktop, icon, metainfo
-      - install -Dm644 ${FLATPAK_ID}.desktop -t /app/share/applications/
-      - mkdir -p /app/share/icons/hicolor/128x128/apps
-      - mv /app/lib/clonehero/clonehero_Data/Resources/UnityPlayer.png /app/share/icons/hicolor/128x128/apps/net.clonehero.clonehero.png
-      - install -Dm644 ${FLATPAK_ID}.metainfo.xml -t /app/share/metainfo
+      # Install extra script that downloads and extracts clonehero
+      - install -Dm755 apply_extra ${FLATPAK_DEST}/bin/apply_extra
+
     sources:
-      - type: file
-        dest-filename: clonehero.tar.xz
-        only-arches: [x86_64]
-        url: https://github.com/clonehero-game/releases/releases/download/V1.0.0.4080/CloneHero-linux.tar.xz
-        sha256: 6162d5fb0810f517ca45249687fc743cc8c1ead140e18a476fd5ad60e3a06592
       - type: script
         dest-filename: clonehero
         commands:
           - ulimit -Sn 65536
-          - /app/lib/clonehero/clonehero "$@"
+          - /app/extra/clonehero/clonehero "$@"
       - type: file
         path: net.clonehero.clonehero.desktop
       - type: file
         path: net.clonehero.clonehero.metainfo.xml
+      - type: file
+        path: net.clonehero.clonehero.png
+      - type: extra-data
+        filename: clonehero.tar
+        only-arches: [x86_64]
+        url: https://github.com/clonehero-game/releases/releases/download/v1.1.0.6085-final/Linux.x86_64-Standalone.tar
+        sha256: c72effdd20cd80ac3aee2900ec2b5154ada036b7e3ab1e1c4c379152491204aa
+        size: 1169681920
+      - type: script
+        dest-filename: apply_extra
+        commands:
+          - tar -xf clonehero.tar --no-same-owner
+          - mv Standalone clonehero
+          - chmod +x clonehero/clonehero
+          - rm clonehero.tar
