@@ -31,7 +31,7 @@ modules:
       # Install wrapper script
       - install -Dm755 clonehero -t /app/bin
 
-      # Install extra script that downloads and extracts clonehero
+      # Install extra script that extracts clonehero
       - install -Dm755 apply_extra ${FLATPAK_DEST}/bin/apply_extra
 
     sources:
@@ -49,13 +49,13 @@ modules:
       - type: extra-data
         filename: clonehero.tar
         only-arches: [x86_64]
-        url: https://github.com/clonehero-game/releases/releases/download/v1.1.0.6085-final/Linux.x86_64-Standalone.tar
-        sha256: c72effdd20cd80ac3aee2900ec2b5154ada036b7e3ab1e1c4c379152491204aa
-        size: 1169681920
+        url: https://github.com/clonehero-game/releases/releases/download/v1.1.0.6142-final/Linux.x86_64-Standalone.tar
+        sha256: 572971d93092283c5d0d52006a26b52ab8e8fb128dcfb42a3496de26c8aa231d
+        size: 1172653056
       - type: script
         dest-filename: apply_extra
         commands:
           - tar -xf clonehero.tar --no-same-owner
-          - mv Standalone clonehero
+          - mv 'Linux - Standalone' clonehero
           - chmod +x clonehero/clonehero
           - rm clonehero.tar
