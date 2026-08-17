@@ -4,7 +4,6 @@ runtime: org.freedesktop.Platform
 runtime-version: '25.08'
 sdk: org.freedesktop.Sdk
 build-extension: true
-appstream-compose: false
 build-options:
   prefix: /usr/lib/extensions/vulkan/low_latency_layer
 
@@ -31,3 +30,10 @@ modules:
       - type: git
         url: https://github.com/Korthos-Software/low_latency_layer.git
         tag: v0.2.0
+  - name: metadata
+    buildsystem: simple
+    build-commands:
+      - install -DCm644 ${FLATPAK_ID}.metainfo.xml -t ${FLATPAK_DEST}/share/metainfo ${FLATPAK_ID}.metainfo.xml
+    sources:
+      - type: file
+        path: org.freedesktop.Platform.VulkanLayer.low_latency_layer.metainfo.xml
