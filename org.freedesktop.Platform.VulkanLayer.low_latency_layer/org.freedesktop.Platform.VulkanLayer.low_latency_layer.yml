@@ -1,0 +1,33 @@
+id: org.freedesktop.Platform.VulkanLayer.low_latency_layer
+branch: 25.08
+runtime: org.freedesktop.Platform
+runtime-version: '25.08'
+sdk: org.freedesktop.Sdk
+build-extension: true
+appstream-compose: false
+build-options:
+  prefix: /usr/lib/extensions/vulkan/low_latency_layer
+
+modules:
+  - name: vulkan-headers
+    buildsystem: cmake-ninja
+    sources:
+      - type: git
+        url: https://github.com/KhronosGroup/Vulkan-Headers.git
+        tag: v1.4.360
+
+  - name: vulkan-utility-libraries
+    buildsystem: cmake-ninja
+    config-opts:
+      - -DBUILD_TESTS=OFF
+    sources:
+      - type: git
+        url: https://github.com/KhronosGroup/Vulkan-Utility-Libraries.git
+        tag: v1.4.360
+
+  - name: low_latency_layer
+    buildsystem: cmake-ninja
+    sources:
+      - type: git
+        url: https://github.com/Korthos-Software/low_latency_layer.git
+        tag: v0.2.0

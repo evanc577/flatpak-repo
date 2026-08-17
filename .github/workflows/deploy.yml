@@ -33,6 +33,7 @@ jobs:
           files: |
             net.clonehero.clonehero/net.clonehero.clonehero.yml
             in.yarg.yarg/in.yarg.yarg.yml
+            org.freedesktop.Platform.VulkanLayer.low_latency_layer/org.freedesktop.Platform.VulkanLayer.low_latency_layer.yml
           gpg-sign: ${{ steps.gpg.outputs.fingerprint }}
           upload-pages-artifact: true
 
