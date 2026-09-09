@@ -37,6 +37,8 @@ jobs:
             org.codeberg.hatsnp.avis-imgv/org.codeberg.hatsnp.avis-imgv.yml
           gpg-sign: ${{ steps.gpg.outputs.fingerprint }}
           upload-pages-artifact: true
+          flatpak-builder-args: |
+            --install-deps-from=flathub
 
   deploy:
     name: Deploy
