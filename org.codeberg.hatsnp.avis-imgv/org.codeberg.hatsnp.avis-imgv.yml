@@ -1,0 +1,39 @@
+id: org.codeberg.hatsnp.avis-imgv
+runtime: org.freedesktop.Platform
+runtime-version: '25.08'
+sdk: org.freedesktop.Sdk
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.rust-stable
+command: avis-imgv
+finish-args:
+  - --socket=wayland
+  - --device=dri
+  - --filesystem=xdg-config/avis-imgv
+modules:
+  - name: avis-imgv
+    buildsystem: simple
+    build-options:
+      append-path: /usr/lib/sdk/rust-stable/bin
+      env:
+        CARGO_HOME: /run/build/avis-imgv/cargo
+        CARGO_NET_OFFLINE: 'true'
+    build-commands:
+      - cargo --offline fetch --manifest-path Cargo.toml --verbose
+      - cargo build --offline --release --all-features
+      - install -Dm0755 target/release/avis-imgv ${FLATPAK_DEST}/bin/avis-imgv
+      - mkdir -p /app/share/icons/hicolor/128x128/apps
+      - install -Dm0644 ${FLATPAK_ID}.png /app/share/icons/hicolor/128x128/apps/${FLATPAK_ID}.png
+      - install -Dm0644 ${FLATPAK_ID}.desktop ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop
+      - install -Dm0644 ${FLATPAK_ID}.metainfo.xml ${FLATPAK_DEST}/share/metainfo/${FLATPAK_ID}.metainfo.xml
+    sources:
+      - type: git
+        url: https://codeberg.org/hatsnp/avis-imgv.git
+        branch_name: master
+        commit: 0413b7374b6827e31d731344cc45e0d3ad43fcaf
+      - type: file
+        path: org.codeberg.hatsnp.avis-imgv.png
+      - type: file
+        path: org.codeberg.hatsnp.avis-imgv.desktop
+      - type: file
+        path: org.codeberg.hatsnp.avis-imgv.metainfo.xml
+      - cargo-sources.json

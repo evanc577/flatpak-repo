@@ -34,6 +34,7 @@ jobs:
             net.clonehero.clonehero/net.clonehero.clonehero.yml
             in.yarg.yarg/in.yarg.yarg.yml
             org.freedesktop.Platform.VulkanLayer.low_latency_layer/org.freedesktop.Platform.VulkanLayer.low_latency_layer.yml
+            org.codeberg.hatsnp.avis-imgv/org.codeberg.hatsnp.avis-imgv.yml
           gpg-sign: ${{ steps.gpg.outputs.fingerprint }}
           upload-pages-artifact: true
 
