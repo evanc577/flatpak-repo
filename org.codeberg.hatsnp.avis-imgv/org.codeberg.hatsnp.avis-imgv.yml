@@ -9,7 +9,43 @@ finish-args:
   - --socket=wayland
   - --device=dri
   - --filesystem=xdg-config/avis-imgv
+  - --env=PERL5LIB=/app/lib/perl5
 modules:
+  - name: exiftool
+    buildsystem: simple
+    build-commands:
+      - perl Makefile.PL INSTALL_BASE=${FLATPAK_DEST}
+      - make
+      - make install
+    sources:
+      - type: git
+        url: https://github.com/exiftool/exiftool.git
+        tag: 13.59
+        commit: 2200871d9cef988051d2a99d67df3bda6cbb30a8
+  - name: perl
+    no-autogen: true
+    config-opts:
+      - -des
+      - -Duseshrplib
+    build-options:
+      cflags: -fPIC
+      ldflags: -fpic
+      prefix: ${FLATPAK_DEST}
+    cleanup:
+      - /man
+      - /lib/perl5/site_perl
+      - "*.pod"
+      - "*.h"
+    post-install:
+      - find /app/lib -name '*.so' -exec chmod 755 {} +
+    sources:
+      - type: archive
+        url: https://www.cpan.org/src/5.0/perl-5.44.0.tar.gz
+        sha256: 3b855066b92491cb40e86affb1ca57d1a388aa43e51b91c7806a32c2f65f96c3
+      - type: script
+        dest-filename: configure
+        commands:
+          - exec ./configure.gnu $@
   - name: avis-imgv
     buildsystem: simple
     build-options:
@@ -21,8 +57,8 @@ modules:
       - cargo --offline fetch --manifest-path Cargo.toml --verbose
       - cargo build --offline --release --all-features
       - install -Dm0755 target/release/avis-imgv ${FLATPAK_DEST}/bin/avis-imgv
-      - mkdir -p /app/share/icons/hicolor/128x128/apps
-      - install -Dm0644 ${FLATPAK_ID}.png /app/share/icons/hicolor/128x128/apps/${FLATPAK_ID}.png
+      - mkdir -p ${FLATPAK_DEST}/share/icons/hicolor/128x128/apps
+      - install -Dm0644 ${FLATPAK_ID}.png ${FLATPAK_DEST}/share/icons/hicolor/128x128/apps/${FLATPAK_ID}.png
       - install -Dm0644 ${FLATPAK_ID}.desktop ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop
       - install -Dm0644 ${FLATPAK_ID}.metainfo.xml ${FLATPAK_DEST}/share/metainfo/${FLATPAK_ID}.metainfo.xml
     sources:

@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Avis Image Viewer
 Type=Application
-Exec=avis-imgv %F
+Exec=avis-imgv %f
 MimeType=inode/directory;image/png;image/jpeg;image/jpg;image/webp;
 Terminal=false
 Categories=Graphics;Viewer;Photography;
