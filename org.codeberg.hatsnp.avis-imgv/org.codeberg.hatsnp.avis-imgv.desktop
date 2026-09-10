@@ -1,8 +1,8 @@
 [Desktop Entry]
 Name=Avis Image Viewer
 Type=Application
-Exec=avis-imgv
-MimeType=image/png;image/jpeg;image/jpg;image/webp;
+Exec=avis-imgv %F
+MimeType=inode/directory;image/png;image/jpeg;image/jpg;image/webp;
 Terminal=false
 Categories=Graphics;Viewer;Photography;
 Icon=org.codeberg.hatsnp.avis-imgv
